@@ -14,6 +14,7 @@
     <link href="https://fonts.bunny.net/css?family=Nunito" rel="stylesheet">
 
     <!-- Scripts -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
     <?php echo app('Illuminate\Foundation\Vite')(['resources/sass/app.scss', 'resources/js/app.js']); ?>
 </head>
 <body>
@@ -43,6 +44,9 @@
                         <?php elseif(Auth::user()->hasRole('renter')): ?>
                             <li class="nav-item">
                                 <a class="nav-link" href="<?php echo e(route('renter.apartment.index')); ?>">Stanovi</a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link" href="<?php echo e(route('renter.apartment.message')); ?>">Poruke</a>
                             </li>
                         <?php endif; ?>
                     </ul>

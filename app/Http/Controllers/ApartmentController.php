@@ -4,6 +4,9 @@ namespace App\Http\Controllers;
 
 use App\Models\Apartment;
 use Illuminate\Http\Request;
+use Auth;
+use App\Models\Message;
+use App\Models\Reply;
 
 class ApartmentController extends Controller
 {
@@ -12,7 +15,7 @@ class ApartmentController extends Controller
      */
     public function index()
     {
-        return view('user.apartments.index');
+        return view('user.apartments.index')->with('apartments', Apartment::all());
     }
 
     /**
@@ -36,7 +39,11 @@ class ApartmentController extends Controller
      */
     public function show(Apartment $apartment)
     {
-        //
+        return view('user.apartments.show')->with([
+            'messages' => Message::all(),
+            'apartment' => $apartment,
+            'replies'   => Reply::all(),
+        ]);
     }
 
     /**
@@ -61,5 +68,20 @@ class ApartmentController extends Controller
     public function destroy(Apartment $apartment)
     {
         //
+    }
+
+    function getAparmentsByCityId($id) {
+        return view('user.apartments.index')->with('apartments', Apartment::all());
+    }
+
+    public function contact (Request $request, $id) {
+        
+        Message::insert([
+            'content' => $request->input('content'),
+            'user_id' => Auth::user()->id,
+            'apartment_id' => $id,
+        ]);
+        return "Poruka poslana";
+        return view('user.apartments.contact');
     }
 }

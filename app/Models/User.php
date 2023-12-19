@@ -8,6 +8,7 @@ use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
 use Laravel\Sanctum\HasApiTokens;
 use Spatie\Permission\Traits\HasRoles;
+use App\Models\Apartment;
 
 class User extends Authenticatable
 {
@@ -53,9 +54,13 @@ class User extends Authenticatable
     {
         return $this->belongsToMany(Permission::class);
     }
+
+    public function apartment() {
+        return $this->hasMany(Apartment::class, 'apartment_id');
+    }
     
-    public function getMorphClass(): string
+    /*public function getMorphClass(): string
     {
         return __CLASS__;
-    }
+    }*/
 }

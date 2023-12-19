@@ -21,6 +21,8 @@ Auth::routes();
 
 Route::group(['prefix' => 'admin', 'middleware' => [\Spatie\Permission\Middleware\RoleMiddleware::using('admin')]], function () {
     Route::get('/user', [App\Http\Controllers\Admin\UserController::class, 'index'])->name('admin.user.index');
+    Route::get('/user/edit/{id}', [App\Http\Controllers\Admin\UserController::class, 'edit'])->name('admin.user.edit');
+    Route::post('/user/update/{user}', [App\Http\Controllers\Admin\UserController::class, 'update'])->name('admin.user.update');
 
     Route::get('/city',        [App\Http\Controllers\Admin\CityController::class, 'index'])->name('admin.city.index');
     Route::get('/city/create', [App\Http\Controllers\Admin\CityController::class, 'create'])->name('admin.city.create');
@@ -33,12 +35,23 @@ Route::group(['prefix' => 'admin', 'middleware' => [\Spatie\Permission\Middlewar
 
 Route::group(['prefix' => 'renter', 'middleware' => [\Spatie\Permission\Middleware\RoleMiddleware::using('renter')]], function () {
     Route::get('/apartment', [App\Http\Controllers\Renter\ApartmentController::class, 'index'])->name('renter.apartment.index');
-    Route::get('/apartment/create', [App\Http\Controllers\Renter\ApartmentController::class, 'create'])->name('home.renter.create');
+    Route::get('/apartment/create', [App\Http\Controllers\Renter\ApartmentController::class, 'create'])->name('renter.apartment.create');
+    Route::post('/apartment/store', [App\Http\Controllers\Renter\ApartmentController::class, 'store'])->name('renter.apartment.store');
+    Route::get('/apartment/show/{id}', [App\Http\Controllers\Renter\ApartmentController::class, 'show'])->name('renter.apartment.show');
+    Route::get('/apartment/message', [App\Http\Controllers\Renter\ApartmentController::class, 'message'])->name('renter.apartment.message');
+    Route::post('/apartment/message/reply', [App\Http\Controllers\Renter\ApartmentController::class, 'reply'])->name('renter.apartment.reply');
+
 });
 
 Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
 
+
 Route::get('/apartment', [App\Http\Controllers\ApartmentController::class, 'index'])->name('user.apartment.index');
+Route::get('/search', [App\Http\Controllers\Admin\CityController::class, 'searchCities'])->name('user.serach.cities');
+Route::get('/apartments/show/{apartment}', [App\Http\Controllers\ApartmentController::class, 'show'])->name('user.apartment.show');
+Route::post('/apartments/show/{apartment}/contact', [App\Http\Controllers\ApartmentController::class, 'contact'])->name('user.apartment.contact');
+
+Route::get('/apartments/city/{id}', [App\Http\Controllers\ApartmentController::class, 'getAparmentsByCityId'])->name('user.serach.city');
 
 //Route::get('/home/user', [App\Http\Controllers\Admin\UserController::class, 'index'])->name('user.index');
 /*Route::get('/home/city', [App\Http\Controllers\Admin\CityController::class, 'index'])->name('home.city.index');

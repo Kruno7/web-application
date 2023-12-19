@@ -66,4 +66,14 @@ class CityController extends Controller
     {
         //
     }
+
+    function searchCities(Request $request) {
+        $cities = City::where('name','LIKE','%'.$request->name."%")->get();
+
+        return response()->json([
+            'cities' => $cities
+        ]);
+        
+    }
+
 }

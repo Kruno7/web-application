@@ -38,6 +38,8 @@ class UserSeeder extends Seeder
         ]);
 
         $admin->assignRole('admin');
+        $renter->assignRole('renter');
+        $user->assignRole('user');
         //$user_admin = User::find(14);
         //$user_admin->assignRole('admin');
     }

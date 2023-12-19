@@ -8,13 +8,20 @@
                 <div class="card-header">
                     <div class="row">
                         <div class="col-md-6">Apartment</div>
-                        <div class="col-md-6"><a class="btn btn-primary" href="{{ route('home.renter.create') }}">Add apartment</a></div>
+                        <div class="col-md-6">
+                            <div class="text-end">
+                                <a class="btn btn-primary" href="{{ route('renter.apartment.create') }}">Add apartment</a>
+                            </div>
+                        </div>
                     </div>
                 </div>
 
                 <div class="card-body">
                     <h3>Stanovi</h3>
-
+                    @foreach($apartments as $apartment)
+                        <p>{{ $apartment }}</p>
+                        <a href="{{ route('renter.apartment.show', $apartment) }}">Show apartment</a>
+                    @endforeach
                 </div>
             </div>
         </div>

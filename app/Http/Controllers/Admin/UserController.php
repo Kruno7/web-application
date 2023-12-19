@@ -86,7 +86,12 @@ class UserController extends Controller
      */
     public function edit(string $id)
     {
-        //
+        $user = User::find($id);
+        $roles = Role::all();
+        return view('admin.users.edit')->with([
+            'user' => $user,
+            'roles'=> $roles
+        ]);
     }
 
     /**
@@ -94,7 +99,10 @@ class UserController extends Controller
      */
     public function update(Request $request, string $id)
     {
-        //
+        $user = User::find($id);
+        //return $request->all();
+        $user->roles()->sync($request->role);
+        return redirect()->route('admin.user.index');
     }
 
     /**

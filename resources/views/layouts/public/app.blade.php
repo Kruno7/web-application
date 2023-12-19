@@ -14,9 +14,10 @@
     <link href="https://fonts.bunny.net/css?family=Nunito" rel="stylesheet">
 
     <link rel="stylesheet" href="{{ asset('css/style.css') }}">
-    <script src="https://kit.fontawesome.com/yourcode.js" crossorigin="anonymous"></script>
+    <!--<script src="https://kit.fontawesome.com/yourcode.js" crossorigin="anonymous"></script>-->
 
     <!-- Scripts -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
     @vite(['resources/sass/app.scss', 'resources/js/app.js'])
 </head>
 <body>
@@ -86,7 +87,7 @@
             </div>
         </nav>
 
-        <main class="container py-4 border">
+        <main class="container py-4 mt-2 border">
             @yield('content')
         </main>
 
