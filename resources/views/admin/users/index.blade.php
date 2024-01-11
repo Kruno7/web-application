@@ -5,7 +5,7 @@
     <div class="row justify-content-center">
         <div class="col-md-8">
             <div class="card">
-                <div class="card-header">{{ __('Users') }}</div>
+                <div class="card-header">{{ __('Korisnici') }}</div>
 
                 <div class="card-body">
                     <table class="table">
@@ -26,8 +26,12 @@
                             <td>{{ $user->email }}</td>
                             <td>{{ $user->getRoleNames()->first() }}</td>
                             <td>
-                                <a href="{{ route('admin.user.edit', $user->id) }}"><button type="button" class="btn btn-primary">Edit</button></a>
-                                <a href="{{-- route('admin.users.destory', $user->id) --}}"><button type="button" class="btn btn-warning">Delete</button></a>
+                                <a href="{{ route('admin.user.edit', $user->id) }}"><button type="button" class="btn btn-primary btn-sm float-start">Edit</button></a>
+                                <form action="{{ route('admin.user.destory', $user->id) }}" method="POST" class="float-start">
+                                    @csrf
+                                    {{ method_field('DELETE') }}
+                                    <button type="submit" class="btn btn-warning btn-sm">Delete</button>
+                                </form>
                             </td>
                         </tr>
                         @endforeach

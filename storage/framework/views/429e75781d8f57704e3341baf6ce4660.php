@@ -38,6 +38,10 @@
                                 <input type="address" class="form-control" name="address">
                             </div>
                             <div class="mb-3">
+                                <label for="contact" class="form-label">Kontakt:</label>
+                                <input type="text" class="form-control" name="contact">
+                            </div>
+                            <div class="mb-3">
                                 <label for="price" class="form-label">Cijena:</label>
                                 <input type="number" class="form-control" min="1" name="price">
                             </div>

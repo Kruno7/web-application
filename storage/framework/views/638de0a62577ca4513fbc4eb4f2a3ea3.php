@@ -19,7 +19,7 @@
 </head>
 <body>
     <div id="app">
-        <nav class="navbar navbar-expand-md navbar-light bg-white shadow-sm">
+        <nav class="navbar navbar-expand-md navbar-dark bg-primary shadow-sm">
             <div class="container">
                 <a class="navbar-brand" href="#">
                     Logo
@@ -47,6 +47,20 @@
                             </li>
                             <li class="nav-item">
                                 <a class="nav-link" href="<?php echo e(route('renter.apartment.message')); ?>">Poruke</a>
+                            </li>
+                            <li class="nav-item dropdown">
+                                <a id="navbarDropdown" class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false" v-pre>
+                                    Neprocitane poruke
+                                </a>
+                                <div class="dropdown-menu dropdown-menu-end" aria-labelledby="navbarDropdown">
+                                <?php $__empty_1 = true; $__currentLoopData = Auth::user()->notifications; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $notification): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); $__empty_1 = false; ?>
+                                    <!--<a href="<?php echo e(route('renter.apartment.message.read')); ?>" class="dropdown-item"><?php echo e($notification->data['content']); ?></a> -->
+                                    <a href="javascript:void(0)" class="dropdown-item" onclick="read_message(this)"  data-notificationid="<?php echo e($notification->id); ?>"><?php echo e($notification->data['content']); ?></a>
+    	                        <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); if ($__empty_1): ?>
+                                    <a class="dropdown-item">No message found</a>
+                                <?php endif; ?>
+                                    
+                                </div>
                             </li>
                         <?php endif; ?>
                     </ul>
@@ -100,6 +114,35 @@
             <?php echo $__env->make('layouts.public.footer', \Illuminate\Support\Arr::except(get_defined_vars(), ['__data', '__path']))->render(); ?>
         </div>
     </div>
+
+    <script>
+        function read_message (caller) {
+            //console.log("Radi")
+            //console.log("AAA ", item)
+            let notificationid = document.getElementById('messageId').value = $(caller).attr('data-notificationid')
+            console.log("Notify ", notificationid)
+                $.ajax({
+                //url: "<?php echo e(route('user.serach.cities')); ?>",
+                url: "<?php echo e(route('renter.apartment.message.read')); ?>",
+                method: "GET",
+                data: {
+                    id: notificationid,
+                },
+                success: function (response) {
+                    console.log(response)
+                    /*$('#show-list').html('')
+                    $.each(response.cities, function(key, value){
+                        var url = '<?php echo e(route("user.serach.city", ":id")); ?>';
+                        url = url.replace(':id', value.id);
+                        //$('#show-list').append('<li class="list-group-item">'+ value.name +'</li>')
+                        $('#show-list').append('<a href="'+ url +'" class="list-group-item list-group-item-action mt-2">'+ value.name +'</a>')
+                    }) */
+                    //$('#result').html('<li class="list-group-item">haha</li>')
+                    //$("#show-list").html(response);
+                },
+            });
+        }
+    </script>
 </body>
 </html>
 <?php /**PATH C:\xampp\htdocs\web-application\resources\views/layouts/admin/app.blade.php ENDPATH**/ ?>

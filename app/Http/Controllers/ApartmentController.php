@@ -8,6 +8,7 @@ use Auth;
 use App\Models\Message;
 use App\Models\Reply;
 
+
 class ApartmentController extends Controller
 {
     /**
@@ -70,18 +71,89 @@ class ApartmentController extends Controller
         //
     }
 
-    function getAparmentsByCityId($id) {
+    public function getAparmentsByCityId($id) 
+    {
         return view('user.apartments.index')->with('apartments', Apartment::all());
     }
 
-    public function contact (Request $request, $id) {
+    public function sendMessage ($id)
+    {
+        $apartment = Apartment::find($id);
+
+        $messages = Message::where('apartment_id', $id)->where('user_id', Auth::user()->id)->get();
+    
         
+        //$message = Message::find(4);
+        //return $message->replies;
+        return view('user.apartments.message')->with([
+            'replies' => Reply::all(),
+            'messages' => $messages,
+            'apartment' => $apartment,
+        ]);
+    }
+
+    public function message () 
+    {
+        
+        //$apartment = Apartment::find(2);
+        //return Auth::user()->id;
+        $apartments = Apartment::all();
+
+        /*foreach ($apartments as $apartment) {
+            echo $apartment->title, '<br>';
+            foreach ($apartment->messages as $message) {
+                echo $message;
+                echo $message->content, '<br>';
+            }
+        }*/
+
+        //return $apartment->messages;
+
+        
+        $messages = Message::where('user_id', Auth::user()->id)->get();
+        
+        
+        /*foreach ($messages as $message) {
+            echo $message->apartments, '<br>';
+        }*/
+        
+        
+
+        //$message = Message::find(4);
+        //return $message->replies;
+        return view('user.apartments.message')->with([
+            'replies' => Reply::all(),
+            'messages' => $messages,
+            //'apartments' => $apartments
+        ]);
+    }
+
+    public function reply (Request $request) 
+    {
+        
+        Reply::insert([
+            'content' => $request->input('content'),
+            'message_id' => $request->input('message_id'),
+            'user_id' => Auth::user()->id,
+        ]);
+
+        return redirect()->back()->with('success', 'your message,here');
+
+        return redirect()->route('user.apartment.message');
+    }
+
+    // public function contact (Request $request, $id) 
+    public function send (Request $request) 
+    {   
         Message::insert([
             'content' => $request->input('content'),
             'user_id' => Auth::user()->id,
-            'apartment_id' => $id,
+            //'apartment_id' => $id,
+            'apartment_id' => $request->input('apartment_id'),
         ]);
-        return "Poruka poslana";
-        return view('user.apartments.contact');
+        return redirect()->back()->with('success', 'your message,here');
+        //return view('user.apartments.contact');
     }
+
+    
 }

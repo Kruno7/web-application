@@ -19,7 +19,7 @@
 </head>
 <body>
     <div id="app">
-        <nav class="navbar navbar-expand-md navbar-light bg-white shadow-sm">
+        <nav class="navbar navbar-expand-md navbar-dark bg-primary shadow-sm">
             <div class="container">
                 <a class="navbar-brand" href="#">
                     Logo
@@ -47,6 +47,20 @@
                             </li>
                             <li class="nav-item">
                                 <a class="nav-link" href="{{ route('renter.apartment.message') }}">Poruke</a>
+                            </li>
+                            <li class="nav-item dropdown">
+                                <a id="navbarDropdown" class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false" v-pre>
+                                    Neprocitane poruke
+                                </a>
+                                <div class="dropdown-menu dropdown-menu-end" aria-labelledby="navbarDropdown">
+                                @forelse (Auth::user()->notifications as $notification)
+                                    <!--<a href="{{ route('renter.apartment.message.read') }}" class="dropdown-item">{{ $notification->data['content'] }}</a> -->
+                                    <a href="javascript:void(0)" class="dropdown-item" onclick="read_message(this)"  data-notificationid="{{ $notification->id }}">{{ $notification->data['content'] }}</a>
+    	                        @empty
+                                    <a class="dropdown-item">No message found</a>
+                                @endforelse
+                                    
+                                </div>
                             </li>
                         @endif
                     </ul>
@@ -98,5 +112,34 @@
             @include('layouts.public.footer')
         </div>
     </div>
+
+    <script>
+        function read_message (caller) {
+            //console.log("Radi")
+            //console.log("AAA ", item)
+            let notificationid = document.getElementById('messageId').value = $(caller).attr('data-notificationid')
+            console.log("Notify ", notificationid)
+                $.ajax({
+                //url: "{{ route('user.serach.cities') }}",
+                url: "{{ route('renter.apartment.message.read') }}",
+                method: "GET",
+                data: {
+                    id: notificationid,
+                },
+                success: function (response) {
+                    console.log(response)
+                    /*$('#show-list').html('')
+                    $.each(response.cities, function(key, value){
+                        var url = '{{ route("user.serach.city", ":id") }}';
+                        url = url.replace(':id', value.id);
+                        //$('#show-list').append('<li class="list-group-item">'+ value.name +'</li>')
+                        $('#show-list').append('<a href="'+ url +'" class="list-group-item list-group-item-action mt-2">'+ value.name +'</a>')
+                    }) */
+                    //$('#result').html('<li class="list-group-item">haha</li>')
+                    //$("#show-list").html(response);
+                },
+            });
+        }
+    </script>
 </body>
 </html>

@@ -16,6 +16,7 @@
 
                 <div class="card-body">
                     <h3>Poruke</h3>
+                    <h4>Neprocitano: <?php echo e($count); ?></h4>
                     
                     <hr>
                     
@@ -26,9 +27,10 @@
                             <div style="border: 1px solid red">
                                 <p class="card-text"><?php echo e($message->content); ?></p>
                                 <p>Korisnik: <?php echo e($message->users->name); ?></p>
+
                             </div>
                             <?php $__currentLoopData = $replies; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $reply): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
-                                <p>Ja: <?php echo e(Auth::user()->name); ?> | <?php echo e($reply->content); ?></p>
+                                <p>Ja: <?php echo e(Auth::user()->name); ?> | <?php echo e($reply->content); ?> Status: <?php if($message->status == 0): ?> neprocitano <?php endif; ?></p>
                             <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
                             
                             <!--<button type="button" class="btn btn-primary" onclick="sendMessage(4)" id="insert" value="insert">Odgovori</button>-->

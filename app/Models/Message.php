@@ -15,6 +15,12 @@ class Message extends Model
     }
     public function apartments ()
     {
-        return $this->belongsTo(Apartment::class, 'apartment_id');
+        return $this->belongsTo(Apartment::class, 'apartment_id'); // Stani kljuc u tablici messages
+    }
+
+
+    public function replies () 
+    {
+        return $this->hasMany(Reply::class, 'message_id'); // strani kljuc u tablici replies
     }
 }

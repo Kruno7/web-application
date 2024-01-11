@@ -1,27 +1,28 @@
 
 
 <?php $__env->startSection('content'); ?>
-
-    <h1>Welcome</h1>
-    <div class="container" style="height:70vh">
+    <img src="<?php echo e(asset('storage/buildings.png')); ?>" class="card-img-top" height="500px">
+    <div class="container" style="min-height:70vh">
         <div class="row mt-4">
             <div class="col-md-8 mx-auto bg-light rounded p-4">
-                <h5 class="text-center font-weight-bold">AutoComplete Search Using Bootstrap 4, PHP, PDO - MySQL & Ajax</h5>
-                <hr class="my-1">
+                <h5 class="text-center font-weight-bold">Pronađite svoj novi stan u bilo kojem gradu</h5>
+                
                 <form action="details.php" method="post" class="p-3">
                     <div class="input-group">
                         <input type="text" name="search" id="search" class="form-control form-control-lg rounded-2 border-info" placeholder="Unesite ime grada..." autocomplete="off" required>
+                        
                         <div class="input-group-append">
                             <!--<input type="submit" name="submit" value="Search" class="btn btn-info btn-lg rounded-0">-->
                         </div>
                     </div>
                 </form>
             </div>
-        <div class="col-md-5" style="position: relative;margin-top: -38px; margin-left: 215px;">
-            <div class="list-group mt-2 mx-4" id="show-list">
+            
+            <div class="col-md-5" style="position: relative;margin-top: -38px; margin-left: 215px;">
+                <div class="list-group mt-2 mx-4" id="show-list">
 
+                </div>
             </div>
-        </div>
         </div>
   </div>
 

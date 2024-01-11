@@ -12,6 +12,7 @@ class Apartment extends Model
     protected $fillable = [
         'title',
         'address',
+        'contact',
         'price',
         'square_meter',
         'description',
@@ -31,12 +32,17 @@ class Apartment extends Model
         'user_id',
     ];
 
-    public function images() {
+    public function images () {
         return $this->hasMany(Image::class, 'apartment_id');
     }
 
-    public function users() {
+    public function users () {
         return $this->belongsTo(User::class, 'user_id');
     }  
+
+    public function messages () 
+    {
+        return $this->hasMany(Message::class, 'apartment_id'); // strani kljuc u tablici messages
+    }
 
 }

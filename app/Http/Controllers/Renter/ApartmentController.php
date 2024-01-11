@@ -9,7 +9,10 @@ use App\Models\Image;
 use App\Models\Apartment;
 use App\Models\Message;
 use App\Models\Reply;
+use App\Models\User;
 use Auth;
+use App\Notifications\MessageNotification;
+use Illuminate\Support\Facades\Notification;
 
 class ApartmentController extends Controller
 {
@@ -169,9 +172,9 @@ class ApartmentController extends Controller
      */
     public function show(string $id)
     {
+        
         return view('renter.apartments.show')->with('apartment', Apartment::find($id));
         
-
     }
 
     /**
@@ -179,7 +182,10 @@ class ApartmentController extends Controller
      */
     public function edit(string $id)
     {
-        //
+        return view('renter.apartments.edit')->with([
+            'apartment' => Apartment::find($id),
+            'cities' => City::all()
+        ]);
     }
 
     /**
@@ -187,7 +193,8 @@ class ApartmentController extends Controller
      */
     public function update(Request $request, string $id)
     {
-        //
+        Apartment::find($id)->update($request->all());
+        return "Update";
     }
 
     /**
@@ -198,24 +205,62 @@ class ApartmentController extends Controller
         //
     }
 
+
+    public function read (Request $request)
+    {
+        /*auth()->user()
+        ->unreadNotifications
+        ->when('182eba69-0e30-4060-ae59-05c544f5568c', function ($query) use ($request) {
+            return $query->where('id', $request->input('id'));
+        })
+        ->markAsRead(); */
+
+        Auth::user()->unreadNotifications->when($request->input('id'), function ($query) use ($request) {
+            return $query->where('id', $request->input('id'));
+        })->markAsRead();
+
+        return "OK";
+
+        Auth()->user()
+        ->unreadNotifications
+        ->when($request->input('id'), function ($query) use ($request) {
+            return $query->where('id', $request->input('id'));
+        })
+        ->markAsRead();
+
+        return $request->all();
+    }
+
+    public function deleteImage ($id)
+    {
+        $image = Image::find($id);
+        $image->delete();
+        return redirect()->back()->with('success', 'your message,here');  
+
+    }
+
     public function message()
     {
         $messages = Message::all();
         $replies  = Reply::all();
+        $count = 2;
+        
         return view('renter.apartments.message')->with([
             'messages' => $messages,
-            'replies' => $replies
+            'replies' => $replies,
+            'count' => $count,
         ]);
     }
 
     public function reply (Request $request)
     {
-      
+        $user = User::all();
         Reply::insert([
             'content' => $request->input('content'),
             'message_id' => $request->input('message_id'),
             'user_id' => Auth::user()->id,
         ]);
+        Notification::send($user, new MessageNotification($request->content));
         return redirect()->route('renter.apartment.message');
     }
 

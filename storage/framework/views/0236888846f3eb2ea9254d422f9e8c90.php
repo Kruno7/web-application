@@ -5,7 +5,7 @@
     <div class="row justify-content-center">
         <div class="col-md-8">
             <div class="card">
-                <div class="card-header"><?php echo e(__('Users')); ?></div>
+                <div class="card-header"><?php echo e(__('Korisnici')); ?></div>
 
                 <div class="card-body">
                     <table class="table">
@@ -26,8 +26,13 @@
                             <td><?php echo e($user->email); ?></td>
                             <td><?php echo e($user->getRoleNames()->first()); ?></td>
                             <td>
-                                <a href="<?php echo e(route('admin.user.edit', $user->id)); ?>"><button type="button" class="btn btn-primary">Edit</button></a>
-                                <a href=""><button type="button" class="btn btn-warning">Delete</button></a>
+                                <a href="<?php echo e(route('admin.user.edit', $user->id)); ?>"><button type="button" class="btn btn-primary btn-sm float-start">Edit</button></a>
+                                <form action="<?php echo e(route('admin.user.destory', $user->id)); ?>" method="POST" class="float-start">
+                                    <?php echo csrf_field(); ?>
+                                    <?php echo e(method_field('DELETE')); ?>
+
+                                    <button type="submit" class="btn btn-warning btn-sm">Delete</button>
+                                </form>
                             </td>
                         </tr>
                         <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>

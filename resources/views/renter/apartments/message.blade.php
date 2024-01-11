@@ -16,6 +16,7 @@
 
                 <div class="card-body">
                     <h3>Poruke</h3>
+                    <h4>Neprocitano: {{ $count }}</h4>
                     
                     <hr>
                     
@@ -26,9 +27,10 @@
                             <div style="border: 1px solid red">
                                 <p class="card-text">{{ $message->content }}</p>
                                 <p>Korisnik: {{ $message->users->name }}</p>
+
                             </div>
                             @foreach ($replies as $reply)
-                                <p>Ja: {{ Auth::user()->name }} | {{ $reply->content }}</p>
+                                <p>Ja: {{ Auth::user()->name }} | {{ $reply->content }} Status: @if($message->status == 0) neprocitano @endif</p>
                             @endforeach
                             
                             <!--<button type="button" class="btn btn-primary" onclick="sendMessage(4)" id="insert" value="insert">Odgovori</button>-->
