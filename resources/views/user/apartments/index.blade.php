@@ -3,7 +3,7 @@
 
 @section('content')
 
-<div class="container mt-4" style="min-height:70vh">
+<div class="container mt-4" style="min-height:100vh;">
     <div class="card-body">
         <h3>Stanovi</h3>
         <hr>

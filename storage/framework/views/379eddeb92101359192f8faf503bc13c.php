@@ -62,13 +62,13 @@
                         <?php if(auth()->guard()->guest()): ?>
                             <?php if(Route::has('login')): ?>
                                 <li class="nav-item">
-                                    <a class="nav-link" href="<?php echo e(route('login')); ?>"><?php echo e(__('Login')); ?></a>
+                                    <a class="nav-link" href="<?php echo e(route('login')); ?>"><?php echo e(__('Prijava')); ?></a>
                                 </li>
                             <?php endif; ?>
 
                             <?php if(Route::has('register')): ?>
                                 <li class="nav-item">
-                                    <a class="nav-link" href="<?php echo e(route('register')); ?>"><?php echo e(__('Register')); ?></a>
+                                    <a class="nav-link" href="<?php echo e(route('register')); ?>"><?php echo e(__('Registracija')); ?></a>
                                 </li>
                             <?php endif; ?>
                         <?php else: ?>
@@ -89,6 +89,11 @@
                                     <form id="logout-form" action="<?php echo e(route('logout')); ?>" method="POST" class="d-none">
                                         <?php echo csrf_field(); ?>
                                     </form>
+                                    <?php if(Auth::user()->hasRole('admin')): ?>
+                                        <a class="dropdown-item" href="<?php echo e(route('admin.user.index')); ?>"><?php echo e(__('Profil')); ?></a>
+                                    <?php elseif(Auth::user()->hasRole('renter')): ?>
+                                        <a class="dropdown-item" href="<?php echo e(route('renter.apartment.index')); ?>"><?php echo e(__('Profil')); ?></a>
+                                    <?php endif; ?>
                                 </div>
                             </li>
                         <?php endif; ?>
@@ -97,7 +102,7 @@
             </div>
         </nav>
         <!--<main class="container">-->
-        <main class="content">
+        <main class="content" style="min-height:80vh;">
             <?php echo $__env->yieldContent('content'); ?>
         </main>
 

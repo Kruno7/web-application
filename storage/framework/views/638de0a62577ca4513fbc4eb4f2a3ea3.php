@@ -21,8 +21,8 @@
     <div id="app">
         <nav class="navbar navbar-expand-md navbar-dark bg-primary shadow-sm">
             <div class="container">
-                <a class="navbar-brand" href="#">
-                    Logo
+                <a class="navbar-brand" href="<?php echo e(url('/')); ?>">
+                    Početna
                 </a>
                 <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="<?php echo e(__('Toggle navigation')); ?>">
                     <span class="navbar-toggler-icon"></span>
@@ -98,6 +98,13 @@
                                     <form id="logout-form" action="<?php echo e(route('logout')); ?>" method="POST" class="d-none">
                                         <?php echo csrf_field(); ?>
                                     </form>
+
+                                    <?php if(Auth::user()->hasRole('admin')): ?>
+                                        <a class="dropdown-item" href="<?php echo e(route('admin.user.profile')); ?>"><?php echo e(__('Profil')); ?></a>
+                                    <?php elseif(Auth::user()->hasRole('renter')): ?>
+                                        <a class="dropdown-item" href="<?php echo e(route('renter.user.profile')); ?>"><?php echo e(__('Profil')); ?></a>
+                                    <?php endif; ?>
+                                    
                                 </div>
                             </li>
                         <?php endif; ?>
@@ -106,7 +113,7 @@
             </div>
         </nav>
 
-        <main class="py-4">
+        <main class="py-4" style="min-height:80vh">
             <?php echo $__env->yieldContent('content'); ?>
         </main>
 

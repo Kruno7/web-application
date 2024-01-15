@@ -21,8 +21,8 @@
     <div id="app">
         <nav class="navbar navbar-expand-md navbar-dark bg-primary shadow-sm">
             <div class="container">
-                <a class="navbar-brand" href="#">
-                    Logo
+                <a class="navbar-brand" href="{{ url('/') }}">
+                    Početna
                 </a>
                 <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="{{ __('Toggle navigation') }}">
                     <span class="navbar-toggler-icon"></span>
@@ -96,6 +96,13 @@
                                     <form id="logout-form" action="{{ route('logout') }}" method="POST" class="d-none">
                                         @csrf
                                     </form>
+
+                                    @if (Auth::user()->hasRole('admin'))
+                                        <a class="dropdown-item" href="{{ route('admin.user.profile') }}">{{ __('Profil') }}</a>
+                                    @elseif (Auth::user()->hasRole('renter'))
+                                        <a class="dropdown-item" href="{{ route('renter.user.profile') }}">{{ __('Profil') }}</a>
+                                    @endif
+                                    
                                 </div>
                             </li>
                         @endguest
@@ -104,7 +111,7 @@
             </div>
         </nav>
 
-        <main class="py-4">
+        <main class="py-4" style="min-height:80vh">
             @yield('content')
         </main>
 

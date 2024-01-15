@@ -200,9 +200,16 @@ class ApartmentController extends Controller
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(string $id)
+    public function delete(string $id)
     {
-        //
+        $apartment = Apartment::find($id);
+        $apartment->delete();
+        return redirect()->back()->with('message', 'success|Record deleted.');
+        
+        /*redirect()->to('/')->with('message', 'success|Record updated.');
+        return $apartment;
+        $user->delete();
+        return "Delete";*/
     }
 
 
@@ -274,5 +281,15 @@ class ApartmentController extends Controller
         ]);
         return "Poruka poslana";
         return view('user.apartments.contact');
+    }
+
+    public function profile ()
+    {
+        return view('renter.profile');
+    }
+
+    public function editProfile ()
+    {
+        return view('renter.edit-profile');
     }
 }

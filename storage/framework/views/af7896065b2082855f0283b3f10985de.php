@@ -2,7 +2,9 @@
 
 <?php $__env->startSection('content'); ?>
 <div class="container">
-    
+    <?php if(Session::has('message')): ?>
+        <p class="alert <?php echo e(Session::get('alert-class', 'alert-info')); ?>"><?php echo e(Session::get('message')); ?></p>
+    <?php endif; ?>
     <div class="row my-2">
         <div class="col-md-6"><h3>Moji Stanovi</h3></div>
         <div class="col-md-6">
@@ -28,9 +30,15 @@
                 <td><?php echo e($apartment->title); ?></td>
                 <td><?php echo e($apartment->address); ?></td>
                 <td>
-                    <a href="<?php echo e(route('renter.apartment.show', $apartment)); ?>"><button type="button" class="btn btn-primary">Prikazi</button></a>
-                    <a href="<?php echo e(route('renter.apartment.edit', $apartment)); ?>"><button type="button" class="btn btn-warning">Uredi</button></a>
-                    <a href="<?php echo e(route('renter.apartment.delete', $apartment)); ?>"><button type="button" class="btn btn-danger">Izbrisi</button></a>
+                    <a href="<?php echo e(route('renter.apartment.show', $apartment)); ?>"><button type="button" class="btn btn-primary float-start btn-sm mx-2">Prikazi</button></a>
+                    <a href="<?php echo e(route('renter.apartment.edit', $apartment)); ?>"><button type="button" class="btn btn-warning float-start btn-sm mx-2">Uredi</button></a>
+                    <!--<a href="<?php echo e(route('renter.apartment.delete', $apartment)); ?>"><button type="button" class="btn btn-danger">Izbrisi</button></a>-->
+                    <form action="<?php echo e(route('renter.apartment.delete', $apartment->id)); ?>" method="POST" class="float-start">
+                        <?php echo csrf_field(); ?>
+                        <?php echo e(method_field('DELETE')); ?>
+
+                        <button type="submit" class="btn btn-danger btn-sm">Izbrisi</button>
+                    </form>
                 </td>
             </tr>
             <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>

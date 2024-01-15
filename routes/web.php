@@ -32,6 +32,8 @@ Route::group(['prefix' => 'admin', 'middleware' => [\Spatie\Permission\Middlewar
     Route::get('/apartment', [App\Http\Controllers\Admin\ApartmentController::class, 'index'])->name('admin.apartment.index');
     Route::get('/apartment/create', [App\Http\Controllers\Admin\ApartmentController::class, 'create'])->name('admin.apartment.create');
     Route::post('/apartment/store', [App\Http\Controllers\Admin\ApartmentController::class, 'store'])->name('admin.apartment.store');
+
+    Route::get('/profile', [App\Http\Controllers\Admin\UserController::class, 'profile'])->name('admin.user.profile');
 });
 
 Route::group(['prefix' => 'renter', 'middleware' => [\Spatie\Permission\Middleware\RoleMiddleware::using('renter')]], function () {
@@ -48,6 +50,8 @@ Route::group(['prefix' => 'renter', 'middleware' => [\Spatie\Permission\Middlewa
 
     Route::delete('/apartment/show/{id}/image/delete', [App\Http\Controllers\Renter\ApartmentController::class, 'deleteImage'])->name('renter.apartment.image.delete');
 
+    Route::get('/profile', [App\Http\Controllers\Renter\ApartmentController::class, 'profile'])->name('renter.user.profile');
+    Route::get('/profile/edit', [App\Http\Controllers\Renter\ApartmentController::class, 'editProfile'])->name('renter.user.edit-profile');
 });
 
 Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');

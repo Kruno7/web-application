@@ -13,7 +13,7 @@ class CityController extends Controller
      */
     public function index()
     {
-        return view('admin.cities.index');
+        return view('admin.cities.index')->with('cities', City::all());
     }
 
     /**
@@ -30,6 +30,8 @@ class CityController extends Controller
     public function store(Request $request)
     {
         City::create($request->all());
+
+        return redirect()->route('admin.city.index')->with('message', 'success|Record added.');
 
         //dd($request->all());
         return "OK";

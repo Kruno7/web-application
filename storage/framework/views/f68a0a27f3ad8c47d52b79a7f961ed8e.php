@@ -51,20 +51,30 @@
             </form>
         </div>
 
-        <!--<div id="contact">
+        <!--<div id="contact"> -->
             <form id="asd" style="display:none" action="<?php echo e(route('user.apartment.send')); ?>" method="POST">
                 <?php echo csrf_field(); ?>
                 <input type="text" id="userId" name="user_id" hidden value="<?php echo e(Auth::user()->id); ?>">
                 <?php if(isset($apartment)): ?>
                 <input type="text" id="apartmentId" name="apartment_id" hidden value="<?php if(!empty($apartment)): ?><?php echo e($apartment->id); ?> <?php endif; ?>">
                 <?php endif; ?>
+                <div class="col-lg-8">
+
+            <div class="card mb-4">
+            <div class="card-body">
+                <div class="row">
+                <div class="col-sm-3">
+        
+            </div>
+            </div>
+            
                 <div class="mb-3">
-                    <label for="content" class="form-label">Example textarea</label>
+                    
                     <textarea class="form-control" id="content" name="content" rows="3"></textarea>
                 </div>
                 <button type="submit" class="btn btn-primary mb-3">Posalji prvu poruku </button>
             </form>
-        </div> -->
+        <!--</div> -->
    
 
 </div>

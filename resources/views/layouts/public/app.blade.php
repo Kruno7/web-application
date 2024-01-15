@@ -62,13 +62,13 @@
                         @guest
                             @if (Route::has('login'))
                                 <li class="nav-item">
-                                    <a class="nav-link" href="{{ route('login') }}">{{ __('Login') }}</a>
+                                    <a class="nav-link" href="{{ route('login') }}">{{ __('Prijava') }}</a>
                                 </li>
                             @endif
 
                             @if (Route::has('register'))
                                 <li class="nav-item">
-                                    <a class="nav-link" href="{{ route('register') }}">{{ __('Register') }}</a>
+                                    <a class="nav-link" href="{{ route('register') }}">{{ __('Registracija') }}</a>
                                 </li>
                             @endif
                         @else
@@ -87,6 +87,11 @@
                                     <form id="logout-form" action="{{ route('logout') }}" method="POST" class="d-none">
                                         @csrf
                                     </form>
+                                    @if (Auth::user()->hasRole('admin'))
+                                        <a class="dropdown-item" href="{{ route('admin.user.index') }}">{{ __('Profil') }}</a>
+                                    @elseif (Auth::user()->hasRole('renter'))
+                                        <a class="dropdown-item" href="{{ route('renter.apartment.index') }}">{{ __('Profil') }}</a>
+                                    @endif
                                 </div>
                             </li>
                         @endguest
@@ -95,7 +100,7 @@
             </div>
         </nav>
         <!--<main class="container">-->
-        <main class="content">
+        <main class="content" style="min-height:80vh;">
             @yield('content')
         </main>
 

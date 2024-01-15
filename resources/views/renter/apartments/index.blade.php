@@ -2,7 +2,9 @@
 
 @section('content')
 <div class="container">
-    
+    @if(Session::has('message'))
+        <p class="alert {{ Session::get('alert-class', 'alert-info') }}">{{ Session::get('message') }}</p>
+    @endif
     <div class="row my-2">
         <div class="col-md-6"><h3>Moji Stanovi</h3></div>
         <div class="col-md-6">
@@ -28,9 +30,14 @@
                 <td>{{ $apartment->title }}</td>
                 <td>{{ $apartment->address }}</td>
                 <td>
-                    <a href="{{ route('renter.apartment.show', $apartment) }}"><button type="button" class="btn btn-primary">Prikazi</button></a>
-                    <a href="{{ route('renter.apartment.edit', $apartment) }}"><button type="button" class="btn btn-warning">Uredi</button></a>
-                    <a href="{{ route('renter.apartment.delete', $apartment) }}"><button type="button" class="btn btn-danger">Izbrisi</button></a>
+                    <a href="{{ route('renter.apartment.show', $apartment) }}"><button type="button" class="btn btn-primary float-start btn-sm mx-2">Prikazi</button></a>
+                    <a href="{{ route('renter.apartment.edit', $apartment) }}"><button type="button" class="btn btn-warning float-start btn-sm mx-2">Uredi</button></a>
+                    <!--<a href="{{ route('renter.apartment.delete', $apartment) }}"><button type="button" class="btn btn-danger">Izbrisi</button></a>-->
+                    <form action="{{ route('renter.apartment.delete', $apartment->id) }}" method="POST" class="float-start">
+                        @csrf
+                        {{ method_field('DELETE') }}
+                        <button type="submit" class="btn btn-danger btn-sm">Izbrisi</button>
+                    </form>
                 </td>
             </tr>
             @endforeach

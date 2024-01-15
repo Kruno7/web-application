@@ -1,15 +1,25 @@
 @extends('layouts.public.app')
 
 @section('content')
-    <img src="{{ asset('storage/buildings.png') }}" class="card-img-top" height="500px">
-    <div class="container" style="min-height:70vh">
-        <div class="row mt-4">
-            <div class="col-md-8 mx-auto bg-light rounded p-4">
+
+    <!--<img src="{{ asset('storage/buildings.png') }}" class="card-img-top" height="500px">
+    <div class="container" style="min-height:70vh"> -->
+    
+
+
+    <div class="bg-image" 
+     style="background-image: url('img/slikastanovi.jpg');
+            height: 100vh">
+        <br><br><br><br>
+        <div class="row mt-10">
+            <div class="col-md-7 mx-auto bg-light rounded p-4">
                 <h5 class="text-center font-weight-bold">Pronađite svoj novi stan u bilo kojem gradu</h5>
                 
                 <form action="details.php" method="post" class="p-3">
                     <div class="input-group">
                         <input type="text" name="search" id="search" class="form-control form-control-lg rounded-2 border-info" placeholder="Unesite ime grada..." autocomplete="off" required>
+                        
+                        <button type="button" class="btn btn-primary btn-lg rounded">Traži</button>
                         
                         <div class="input-group-append">
                             <!--<input type="submit" name="submit" value="Search" class="btn btn-info btn-lg rounded-0">-->
@@ -25,7 +35,7 @@
             </div>
         </div>
   </div>
-
+</div>
 </div>
     
 <script>
